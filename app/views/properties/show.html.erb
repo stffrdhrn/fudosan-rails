@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+ 
+<p>
+  <b>Name:</b>
+  <%= @property.name %>
+</p>
+ 
+<p>
+  <b>Address:</b>
+  <%= @property.address %>
+</p>
+
+<h4>Clients Viewing Property</h4>
+<% if @property.client.nil? %>
+<p>No clients viewing this property </p>
+<% else %>
+<%= link_to @property.client.name, @property.client %>
+<% end %>
+
+ 
+<%= link_to 'Edit', edit_property_path(@property) %> |
+<%= link_to 'Back', properties_path %>

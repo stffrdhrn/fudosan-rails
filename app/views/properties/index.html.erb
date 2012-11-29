@@ -1,0 +1,13 @@
+<h4>Properties</h4>
+<p>List of properties I am managing
+<div id="allproperties">
+<% @properties.each do |property| %>
+<div id="<%= property.id %>" class="draggable">
+ <table class="table table-hover">
+  <tr>
+    <td><%= link_to property.name, property %></a>
+  </tr>
+ </table>
+</div>
+<% end %>
+</div>

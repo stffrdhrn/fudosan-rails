@@ -1,0 +1,3 @@
+== Fudosan
+This is an adaption of the Fudosan app written in in PHP.  Trying to 
+rewrite in rails to learn if its better.
