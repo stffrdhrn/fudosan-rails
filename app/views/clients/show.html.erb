@@ -1,14 +1,22 @@
-<p id="notice"><%= notice %></p>
+
+<div class="span2">
+  <%= gravatar @client.email %>
+  <p><a target="blank" href="http://www.gravatar.com">change picture</a></p>
+</div> 
+<div class="span10">
  
-<p>
-  <b>Name:</b>
-  <%= @client.name %>
-</p>
+   <h4>Client</h4>
+   <table class="table">
+     <tr><td>Name     <td><%= @client.name %></tr>
+     <tr><td>Email    <td><%= @client.email %></tr>
+   </table>
+
+
+   <% if current_client.try(:admin?) %>
+   <div class="form-actions">
+   <%= link_to 'Edit', edit_client_path(@client), :class => 'btn btn-primary' %>
+   <%= link_to 'Back', clients_path, :class => 'btn' %>
+   </div>
+   <% end %>
+</div>
  
-<p>
-  <b>E-mail:</b>
-  <%= @client.email %>
-</p>
- 
-<%= link_to 'Edit', edit_client_path(@client) %> |
-<%= link_to 'Back', clients_path %>

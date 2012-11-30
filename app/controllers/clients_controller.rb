@@ -1,5 +1,7 @@
 class ClientsController < ApplicationController
 
+  before_filter :authenticate_client! 
+
   respond_to :html, :json
 
   def show
@@ -8,31 +10,8 @@ class ClientsController < ApplicationController
   end
 
   def index
-    @clients = Client.all
+    @clients = Client.all_but_id(current_client.id)
     respond_with(@clients)
-  end
-
-  def new 
-    @client = Client.new
-    respond_with(@client)
-  end
-
-  def create
-    @client = Client.new(params[:client])
-
-    respond_to do |format|
-      if @client.save
-        format.html { redirect_to(@client, 
-                      :notice => 'Client was sucessfuly created.') }
-        format.json { render :json => @client,
-                      :status => :created, 
-                      :location => @client }
-      else
-        format.html  { render :action => "new" }
-        format.json  { render :json => @client.errors,
-                       :status => :unprocessable_entity }
-      end
-    end
   end
 
   def update

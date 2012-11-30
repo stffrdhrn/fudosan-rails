@@ -1,5 +1,10 @@
 Fudosan::Application.routes.draw do
 
+  devise_for :clients
+
+  match 'properties/:id/client/:client_id/link' => 'properties#link', :as => :properties_link
+  match 'properties/:id/client/unlink' => 'properties#unlink', :as => :properties_unlink
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

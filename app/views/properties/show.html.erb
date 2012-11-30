@@ -1,22 +1,28 @@
-<p id="notice"><%= notice %></p>
- 
-<p>
-  <b>Name:</b>
-  <%= @property.name %>
-</p>
- 
-<p>
-  <b>Address:</b>
-  <%= @property.address %>
-</p>
+<div class="span9">
+   <h4>Property</h4>
+   <table class="table">
+     <tr><td>Name     <td><%= @property.name %></tr>
+     <tr><td>Address  <td><%= @property.address %></tr>
+   </table>
 
-<h4>Clients Viewing Property</h4>
-<% if @property.client.nil? %>
-<p>No clients viewing this property </p>
-<% else %>
-<%= link_to @property.client.name, @property.client %>
-<% end %>
+   <% if current_client.try(:admin?) %>
+   <h4>Clients Viewing Property</h4>
+   <% if @property.client.nil? %>
+   <p>No clients viewing this property </p>
+   <% else %>
+   <%= link_to @property.client.name, @property.client %> 
+   <%= link_to 'remove', properties_unlink_path(:id => @property.id), :class => "btn btn-danger" %>
+   <% end %>
 
- 
-<%= link_to 'Edit', edit_property_path(@property) %> |
-<%= link_to 'Back', properties_path %>
+   <div class="form-actions">
+   <%= link_to 'Edit', edit_property_path(@property), :class => 'btn btn-primary' %>
+   <%= link_to 'Back', properties_path, :class => 'btn' %>
+   </div>
+   <% end %>
+</div>
+<div class="span3">
+  <h4>Add clients to property?</h4>
+  <table class="table table-hover">
+  <%= render @clients, :property_id => @property.id %> 
+  </table>
+</div>

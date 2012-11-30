@@ -1,13 +1,7 @@
-<h4>Clients</h4>
-<p>List of properties I am managing
-<div id="allclients">
-<% @clients.each do |client| %>
-<div id="<%= client.id %>" class="draggable">
- <table class="table table-hover">
-  <tr>
-    <td><%= link_to client.name, client %></a>
-  </tr>
- </table>
-</div>
-<% end %>
+<div class="span9">
+   <h4>Clients</h4>
+   <p>My clients
+   <table class="table table-hover">
+   <%= render @clients %>
+   </table>
 </div>

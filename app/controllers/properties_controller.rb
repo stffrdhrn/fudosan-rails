@@ -1,10 +1,13 @@
 class PropertiesController < ApplicationController
 
+  before_filter :authenticate_client!
+
   respond_to :html, :json
 
   def show
     @property = Property.find(params[:id])
-   respond_with(@property)
+    @clients = Client.all_but_id(current_client.id)
+    respond_with(@property)
   end
 
   def index
@@ -14,6 +17,45 @@ class PropertiesController < ApplicationController
 
   def listmine
   end
+
+  # links a client to the property
+  def link
+    property = Property.find(params[:id])
+    client = Client.find(params[:client_id])
+    property.client = client
+
+    respond_to do |format|
+      if property.save
+        format.html { redirect_to(property, 
+                      :notice => "Property now being shown to #{client.name}.") }
+        format.json { head :no_content }
+      else
+        format.html  { render :action => "show" }
+        format.json  { render :json => property.errors,
+                       :status => :unprocessable_entity }
+      end
+    end
+
+  end
+
+  def unlink
+    property = Property.find(params[:id])
+    property.client = nil
+
+    respond_to do |format|
+      if property.save
+        format.html { redirect_to(property, 
+                      :notice => "Property now taken off the market.") }
+        format.json { head :no_content }
+      else
+        format.html  { render :action => "show" }
+        format.json  { render :json => property.errors,
+                       :status => :unprocessable_entity }
+      end
+    end
+
+  end
+
 
   def new 
     @property = Property.new

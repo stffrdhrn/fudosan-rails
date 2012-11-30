@@ -1,0 +1,10 @@
+    <tr>
+      <td>
+      <%= gravatar client.email, 24 %> 
+      <%= link_to client.name, client %>
+      <% if defined? property_id %>
+      <%= link_to 'add', properties_link_path(:id => property_id, :client_id => client.id), :class => 'btn btn-success' %>
+      <% end %>
+      </td>
+    </tr>
+
