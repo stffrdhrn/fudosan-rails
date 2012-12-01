@@ -1,5 +1,13 @@
 Fudosan::Application.routes.draw do
 
+  get "images/new"
+
+  get "images/edit"
+
+  get "images/:id" => "images#show", :as => "image"
+  post "images" => "images#create"
+  get "images" => "images#index"
+
   devise_for :clients
 
   match 'properties/:id/client/:client_id/link' => 'properties#link', :as => :properties_link

@@ -1,3 +1,4 @@
+<% @title = "Property : #{@property.name}" %>
 <div class="span9">
    <h4>Property</h4>
    <table class="table">
@@ -10,13 +11,19 @@
    <% if @property.client.nil? %>
    <p>No clients viewing this property </p>
    <% else %>
-   <%= link_to @property.client.name, @property.client %> 
-   <%= link_to 'remove', properties_unlink_path(:id => @property.id), :class => "btn btn-danger" %>
+   <table class="table">
+     <tr>
+      <td width=24px"><%= gravatar @property.client.email, 24 %></td>
+      <td><%= link_to @property.client.name, @property.client %></td>
+      <td><%= link_to 'remove', properties_unlink_path(:id => @property.id), :class => "btn btn-danger" %></td>
+     </tr>
+   </table>
    <% end %>
 
    <div class="form-actions">
    <%= link_to 'Edit', edit_property_path(@property), :class => 'btn btn-primary' %>
    <%= link_to 'Back', properties_path, :class => 'btn' %>
+   <%= link_to 'Attach Image', images_new_path, :class => 'btn' %>
    </div>
    <% end %>
 </div>
