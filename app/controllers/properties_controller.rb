@@ -7,6 +7,7 @@ class PropertiesController < ApplicationController
   def show
     @property = Property.find(params[:id])
     @clients = Client.all_but_id(current_client.id)
+    session[:image_property_id] = params[:id]
     respond_with(@property)
   end
 

@@ -6,6 +6,26 @@
      <tr><td>Address  <td><%= @property.address %></tr>
    </table>
 
+   <h4>Images</h4>
+   <% if @property.images.any? %>
+   <div id="intCarousel" class="carousel slide">
+     <div class="carousel-inner">
+     <% @property.images.each_with_index do |image,i| %>
+     <div class="item<%= " active" if i == 0 %>">
+       <%= image_tag image.file.url %>
+       <div class="carousel-caption">
+         <p><%= image.description %></p>
+       </div>
+     </div>
+     <% end %>
+     </div>
+     <a class="carousel-control left" href="#intCarousel" data-slide="prev">&lsaquo;</a>
+     <a class="carousel-control right" href="#intCarousel" data-slide="next">&rsaquo;</a>
+   </div>
+   <% else %>
+   <p>No images available yet, use the <b>attach image</b> button below to add some</p>
+   <% end %>
+
    <% if current_client.try(:admin?) %>
    <h4>Clients Viewing Property</h4>
    <% if @property.client.nil? %>
@@ -23,7 +43,7 @@
    <div class="form-actions">
    <%= link_to 'Edit', edit_property_path(@property), :class => 'btn btn-primary' %>
    <%= link_to 'Back', properties_path, :class => 'btn' %>
-   <%= link_to 'Attach Image', images_new_path, :class => 'btn' %>
+   <%= link_to 'Attach Image', new_image_path, :class => 'btn' %>
    </div>
    <% end %>
 </div>
@@ -33,3 +53,10 @@
   <%= render @clients, :property_id => @property.id %> 
   </table>
 </div>
+
+<script>
+
+  $(function() {
+    $('.carousel').carousel();
+  });
+</script>

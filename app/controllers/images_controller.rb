@@ -16,13 +16,23 @@ class ImagesController < ApplicationController
   def create
     @image = Image.new(params[:image])
 
+    if session[:image_property_id]
+      p = Property.find(session[:image_property_id])
+      @image.property = p
+    end
+
+
     respond_to do |format|
       if @image.save
-        format.html { redirect_to(@image, 
+        if params[:image][:file].blank? 
+          format.html { redirect_to(@image, 
                       :notice => 'Image was sucessfuly uploaded.') }
-        format.json { render :json => @image,
+          format.json { render :json => @image,
                       :status => :created, 
                       :location => @image }
+        else
+	  format.html { render :crop }
+	end
       else
         format.html  { render :action => "new" }
         format.json  { render :json => @image.errors,
@@ -36,9 +46,16 @@ class ImagesController < ApplicationController
 
     respond_to do |format|
       if @image.update_attributes(params[:image])
-        format.html { redirect_to(@image, 
-                      :notice => 'Post was sucessfuly updated.') }
-        format.json { head :no_content }
+        if params[:image][:file]
+	  format.html { render :crop }
+        elsif session[:image_property_id]
+          format.html { redirect_to(property_url(session[:image_property_id]),
+                        :notice => 'Attached Image') }
+        else
+          format.html { redirect_to(images_url, 
+                      :notice => 'Attached Image') }
+          format.json { head :no_content }
+        end
       else
         format.html  { render :action => "edit" }
         format.json  { render :json => @image.errors,
@@ -47,6 +64,16 @@ class ImagesController < ApplicationController
     end
   end
 
+  def destroy
+    @image = Image.find(params[:id])
+    @image.destroy
+
+    respond_to do |format|
+          format.html { redirect_to(images_url, 
+                       :notice => 'Image removed') }
+          format.json { head :no_content }
+    end
+  end
 
   def edit
     @image = Image.find(params[:id])

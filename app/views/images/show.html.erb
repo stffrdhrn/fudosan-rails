@@ -1,2 +1,7 @@
-<%= @image.description %>
-<%= image_tag(@image.file_url) if @image.file? %>
+<div class="span12">
+<h4><%= @image.description %></h4>
+<div class="image-decorator">
+  <%= image_tag(@image.file_url) if @image.file? %>
+</div>
+
+</div>

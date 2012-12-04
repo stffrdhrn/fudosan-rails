@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
+  include CarrierWave::RMagick
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -35,10 +36,31 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
-  # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process :scale => [50, 50]
-  # end
+  process :get_geometry
+
+  def width
+    @width
+  end
+
+  def height
+    @height
+  end
+
+  def get_geometry
+    if @file
+      img = ::Magick::Image::read(@file.file).first
+      @width = img.columns
+      @height = img.rows
+    end
+  end
+
+  version :croppie do
+    process :resize_to_fit => [600, 600]
+  end
+
+  version :thumb do
+    process :resize_to_fill => [50, 50]
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:

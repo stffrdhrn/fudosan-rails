@@ -1,2 +1,16 @@
-<h1>Images#index</h1>
-<p>Find me in app/views/images/index.html.erb</p>
+<h4>All the images!</h4>
+
+
+   <table class="table table-hover">
+   <% @images.each do |image| %>
+     <tr>
+       <td><%= image_tag image.file.thumb.url %>
+       <td><%= image.description %>
+       <td><%= link_to "delete", image, :confirm => 'Are you sure?', 
+                                        :method => :delete,
+                                        :class => 'btn btn-danger' %>
+     </tr>
+   <% end %>
+   </table>
+
+</div>
