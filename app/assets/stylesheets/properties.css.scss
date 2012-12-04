@@ -4,5 +4,11 @@
 
 .carousel {
  width: 600px;
- height: 400px;
 }
+
+@media (max-width:600px) {
+ .carousel {
+ width: 100%;
+ } 
+}
+
