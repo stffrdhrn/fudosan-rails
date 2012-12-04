@@ -1,8 +1,12 @@
 <% @title = "Properties" %>
 <div class="span12">
    <h4>Properties</h4>
+   <% if current_client.try(:admin?) %>
    <p>List of properties I am managing
-   <div id="allproperties">
+   <% else %>
+   <p>Your property manager wants you check these out!</p>
+   <% end %>
+
    <table class="table table-hover">
    <% @properties.each do |property| %>
      <tr>
@@ -10,7 +14,6 @@
      </tr>
    <% end %>
    </table>
-   </div>
 
    <% if current_client.try(:admin?) %>
    <div class="form-actions">

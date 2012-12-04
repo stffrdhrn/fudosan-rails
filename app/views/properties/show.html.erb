@@ -47,12 +47,14 @@
    </div>
    <% end %>
 </div>
+<% if current_client.try(:admin?) %>
 <div class="span3">
   <h4>Add clients to property?</h4>
   <table class="table table-hover">
   <%= render @clients, :property_id => @property.id %> 
   </table>
 </div>
+<% end %>
 
 <script>
 

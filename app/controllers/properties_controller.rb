@@ -12,7 +12,12 @@ class PropertiesController < ApplicationController
   end
 
   def index
-    @properties = Property.all
+    if current_client.try(:admin?)
+      @properties = Property.all
+    else
+      # listing properties for users
+      @properties = Property.where('client_id = ?', current_client.id)
+    end  
     respond_with(@properties)
   end
 
