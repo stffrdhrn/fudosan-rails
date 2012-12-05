@@ -1,6 +1,6 @@
 Fudosan::Application.routes.draw do
 
-  devise_for :clients
+  devise_for :clients, :controllers => { :omniauth_callbacks => "clients/omniauth_callbacks" }
 
   match 'properties/:id/client/:client_id/link' => 'properties#link', :as => :properties_link
   match 'properties/:id/client/unlink' => 'properties#unlink', :as => :properties_unlink
