@@ -6,7 +6,8 @@ class ClientsController < ApplicationController
 
   def show
     @client = Client.find(params[:id])
-   respond_with(@client)
+    @properties = Property.all
+    respond_with(@client)
   end
 
   def index

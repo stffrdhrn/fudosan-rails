@@ -1,0 +1,15 @@
+    <tr>
+      <% if property.images.any? %>
+      <td width="56px"><%= image_tag property.images.first.file.thumb.url %> 
+      <% else  %>
+      <td><%= image_tag 'apartment.png' %>  
+      <% end %>
+      <td>
+      <%= link_to property.name, property %>
+      <% if defined? client_id %>
+      <td>
+      <%= link_to 'add', properties_link_path(:id => property.id, :client_id => client_id, :format => :json), :remote => true, :class => 'btn btn-success' %>
+      <% end %>
+      </td>
+    </tr>
+

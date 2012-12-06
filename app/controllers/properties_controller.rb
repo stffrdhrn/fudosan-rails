@@ -16,12 +16,9 @@ class PropertiesController < ApplicationController
       @properties = Property.all
     else
       # listing properties for users
-      @properties = Property.where('client_id = ?', current_client.id)
+      @properties = Property.where(:client_id => current_client.id)
     end  
     respond_with(@properties)
-  end
-
-  def listmine
   end
 
   # links a client to the property
@@ -43,7 +40,8 @@ class PropertiesController < ApplicationController
     end
 
   end
-
+ 
+  # unclink a client from a property
   def unlink
     property = Property.find(params[:id])
     property.client = nil

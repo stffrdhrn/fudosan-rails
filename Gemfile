@@ -12,7 +12,6 @@ gem 'therubyracer'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
-gem 'omniauth-openid'
 gem 'carrierwave'
 gem 'rmagick'
 

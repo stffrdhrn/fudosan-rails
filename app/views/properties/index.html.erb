@@ -8,11 +8,7 @@
    <% end %>
 
    <table class="table table-hover">
-   <% @properties.each do |property| %>
-     <tr>
-       <td><%= link_to property.name, property %></a>
-     </tr>
-   <% end %>
+   <%= render @properties %>
    </table>
 
    <% if current_client.try(:admin?) %>

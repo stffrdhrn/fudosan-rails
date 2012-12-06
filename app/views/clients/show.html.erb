@@ -1,22 +1,70 @@
+<% @title = @client.name %>
+<div class="span9">
+   <div class="row">
+     <div class="span3 profile-photo">
+       <%= gravatar @client.email %>
+     </div>
+     <div class="span9">
+     <h4>Client Management</h4>
+     <table class="table">
+       <tr><td>Name     <td><%= @client.name %></tr>
+       <tr><td>Email    <td><%= @client.email %></tr>
+     </table>
+     </div>
+   </div>
 
-<div class="span2 profile-photo">
-  <%= gravatar @client.email %>
-  <p><a target="blank" href="http://www.gravatar.com">change picture</a></p>
-</div> 
-<div class="span10">
- 
-   <h4>Client</h4>
-   <table class="table">
-     <tr><td>Name     <td><%= @client.name %></tr>
-     <tr><td>Email    <td><%= @client.email %></tr>
+   <% if current_client.try(:admin?) %> 
+   <h4>Currently Being Shown</h4>
+   <div id="client-properties">
+     <div id="client-prop-data">
+   <table class="table table-hover">
+   <% @client.properties.each do |property| %>
+     <tr>
+       <% if property.images.any? %>
+         <td width="48px"><%= image_tag property.images.first.file.thumb.url %>
+       <% else %>
+         <td width="48px"><%= image_tag 'apartment.png' %>
+       <% end %>
+       <td><%= property.name %>
+       <td width="64px"><%= link_to 'remove', properties_unlink_path(:id => property.id, :format => :json), :remote => true, :class => "btn btn-danger" %></td>
+     </tr>
+   <% end %>
    </table>
+     </div>
+   </div>
 
-
-   <% if current_client.try(:admin?) %>
    <div class="form-actions">
    <%= link_to 'Edit', edit_client_path(@client), :class => 'btn btn-primary' %>
    <%= link_to 'Back', clients_path, :class => 'btn' %>
    </div>
    <% end %>
 </div>
- 
+<div class="span3">
+  <h4>Properties to Show</h4>
+  <table class="table">
+  <%= render @properties, :client_id => @client.id %> 
+  </table>
+</div> 
+
+<script>
+ $(function () {
+
+   function setup_bindings() {
+     $("a.btn").bind("ajax:success", success).bind("ajax:error", error );
+   }
+
+   function success(evt, data, status, xhr) { 
+      $("#client-properties").load(
+         "<%= client_path @client %> #client-prop-data",
+         // When the new property is returned we want to 
+         // make sure the 'remove' button is also linked
+         setup_bindings);
+   }
+   
+   function error(evt, data, status, xhr) {
+      alert("failed link/unklink");
+   }
+
+   setup_bindings();
+ });
+</script>
