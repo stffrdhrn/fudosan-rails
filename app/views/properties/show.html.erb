@@ -1,5 +1,5 @@
 <% @title = "Property : #{@property.name}" %>
-<div class="span9">
+<div class="span12">
    <h4>Property</h4>
    <table class="table">
      <tr><td>Name     <td><%= @property.name %></tr>
@@ -47,14 +47,6 @@
    </div>
    <% end %>
 </div>
-<% if current_client.try(:admin?) %>
-<div class="span3">
-  <h4>Add clients to property?</h4>
-  <table class="table table-hover">
-  <%= render @clients, :property_id => @property.id %> 
-  </table>
-</div>
-<% end %>
 
 <script>
 

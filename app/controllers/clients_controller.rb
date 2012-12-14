@@ -19,7 +19,7 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
 
     respond_to do |format|
-      if @client.update_attributes(params[:client])
+      if @client.update_attributes(params[:client], :as => current_client_role.to_sym)
         format.html { redirect_to(@client, 
                       :notice => 'Client was sucessfuly updated.') }
         format.json { head :no_content }

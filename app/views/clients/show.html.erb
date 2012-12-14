@@ -9,6 +9,9 @@
      <table class="table">
        <tr><td>Name     <td><%= @client.name %></tr>
        <tr><td>Email    <td><%= @client.email %></tr>
+       <% if @client.try(:admin?) %>
+       <tr><td>Role     <td>Admin</tr>
+       <% end %>
      </table>
      </div>
    </div>

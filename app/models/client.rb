@@ -7,10 +7,11 @@ class Client < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :admin, :provider, :uid
+  attr_accessible :password, :password_confirmation, :remember_me, :provider, :uid
 
   # Attributes for application
-  attr_accessible :name
+  attr_accessible :email, :name
+  attr_accessible :email, :name, :admin, :as => :admin
 
   has_many :properties  
 
