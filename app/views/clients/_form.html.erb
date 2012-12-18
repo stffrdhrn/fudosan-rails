@@ -1,4 +1,4 @@
-<%= form_for(@client) do |f| %>
+<%= form_for(@client, :html => {:class => 'form-horizontal'}) do |f| %>
   <legend>Edit Profile</legend>
   <% if @client.errors.any? %>
   <div id="errorExplanation">
@@ -11,11 +11,15 @@
     </ul>
   </div>
   <% end %>
-  <%= f.label :name %><%= f.text_field :name %>
-
-  <%= f.label :email %><%= f.text_field :email %>
+<%= control_group f, :name %>
+<%= control_group(f, :email, 'icon-envelope') %>
+<%= control_group(f, :phone, 'icon-phone') %>
+<%= control_group(f,'Move in from ') do
+       f.text_field(:move_in, {:class => 'datepicker'})+ " to " +
+       f.text_field(:move_out, {:class => 'datepicker'})
+  end %>
 <% if current_client.try(:admin?) %>
-  <%= f.label :admin %><%= f.check_box :admin %>
+<%= control_group(f, 'Admin enabled?') { f.check_box :admin } %>
 <% end %>
   <div class="form-actions">
     <%= f.submit :class => 'btn btn-primary' %>

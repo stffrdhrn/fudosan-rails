@@ -10,8 +10,8 @@ class Client < ActiveRecord::Base
   attr_accessible :password, :password_confirmation, :remember_me, :provider, :uid
 
   # Attributes for application
-  attr_accessible :email, :name
-  attr_accessible :email, :name, :admin, :as => :admin
+  attr_accessible :move_in, :move_out, :phone, :email, :name
+  attr_accessible :move_in, :move_out, :phone, :email, :name, :admin, :as => :admin
 
   has_many :properties  
 
