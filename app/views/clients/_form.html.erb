@@ -12,14 +12,41 @@
   </div>
   <% end %>
 <%= control_group f, :name %>
-<%= control_group(f, :email, 'icon-envelope') %>
-<%= control_group(f, :phone, 'icon-phone') %>
-<%= control_group(f,'Move in from ') do
+<%= control_group(f, :email, { :icon => 'icon-envelope' }) %>
+<%= control_group(f, :phone, { :icon => 'icon-phone'}) %>
+<%= control_group(f, :institute,  { :help => 'School or Work place' } ) %>
+<%= control_group(f, :preferred_location,  { :help => 'Station or Area to live' } ) %>
+
+<%= control_group(f, 'Move in from ') do
        f.text_field(:move_in, {:class => 'datepicker'})+ " to " +
        f.text_field(:move_out, {:class => 'datepicker'})
   end %>
-<% if current_client.try(:admin?) %>
-<%= control_group(f, 'Admin enabled?') { f.check_box :admin } %>
+
+<%= control_group(f, :budget) do
+       f.select(:budget, ['50,000 yen', '~ 70,000 yen', '~ 100,000 yen'])
+  end %>
+<%= control_group(f, :room_size) do
+       f.select(:room_size, {'20 sqm'=>30, '~ 30 sqm'=>30, '~ 40 sqm'=>40, 'bigger'=>999})
+  end %>
+<%= control_group(f, :time_to_station) do
+       f.select(:building_age, {'3 mins'=>3, '~ 5 mins'=>5, '~ 10 mins'=>10})
+  end %>
+
+<%= control_group(f, :room_format) do
+    f.check_box(:oneldk) + ' 1ldk ' +
+    f.check_box(:onedk) + ' 1dk ' +
+    f.check_box(:onek) + ' 1k'
+  end %>
+<%= control_group(f, :building_age) do
+       f.select(:building_age, {'new'=>0, '~ 3 years'=>3, '~ 5 years'=>5, '~ 10 years'=>10})
+  end %>
+
+
+<% if current_client.admin? %>
+<%= control_group(f, :comment, {:help => 'Any additional requirements?'}) do
+       f.text_area(:comment, :size => "25x6")
+  end %>
+<%= control_group(f, ' ', {:msg => ' Is admin' }) { f.check_box :admin } %>
 <% end %>
   <div class="form-actions">
     <%= f.submit :class => 'btn btn-primary' %>
