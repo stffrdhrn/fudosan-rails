@@ -23,24 +23,22 @@
   end %>
 
 <%= control_group(f, :budget) do
-       f.select(:budget, ['50,000 yen', '~ 70,000 yen', '~ 100,000 yen'])
+       f.select(:budget, {'50,000 yen'=>5, '~ 70,000 yen'=>7, '~ 100,000 yen'=>10}, {:include_blank => 'None'})
   end %>
 <%= control_group(f, :room_size) do
-       f.select(:room_size, {'20 sqm'=>30, '~ 30 sqm'=>30, '~ 40 sqm'=>40, 'bigger'=>999})
+       f.select(:room_size, {'20 sqm'=>30, '~ 30 sqm'=>30, '~ 40 sqm'=>40, 'bigger'=>999}, {:include_blank => 'None'})
   end %>
-<%= control_group(f, :time_to_station) do
-       f.select(:building_age, {'3 mins'=>3, '~ 5 mins'=>5, '~ 10 mins'=>10})
-  end %>
-
 <%= control_group(f, :room_format) do
     f.check_box(:oneldk) + ' 1ldk ' +
     f.check_box(:onedk) + ' 1dk ' +
     f.check_box(:onek) + ' 1k'
   end %>
 <%= control_group(f, :building_age) do
-       f.select(:building_age, {'new'=>0, '~ 3 years'=>3, '~ 5 years'=>5, '~ 10 years'=>10})
+       f.select(:building_age, {'new'=>0, '~ 3 years'=>3, '~ 5 years'=>5, '~ 10 years'=>10}, {:include_blank => 'None'})
   end %>
-
+<%= control_group(f, :time_to_station) do
+       f.select(:time_to_station, {'3 mins'=>3, '~ 5 mins'=>5, '~ 10 mins'=>10}, {:include_blank => 'None'})
+  end %>
 
 <% if current_client.admin? %>
 <%= control_group(f, :comment, {:help => 'Any additional requirements?'}) do
