@@ -9,7 +9,7 @@ class Client < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  # attr_accessible :password, :password_confirmation, :remember_me, :provider, :uid
+  attr_accessible :password, :password_confirmation, :remember_me, :provider, :uid
 
   # Attributes for application
   attr_accessible :phone, :email, :name,
@@ -41,9 +41,9 @@ class Client < ActiveRecord::Base
       end
 
       room_formats = self[:room_format].split(/,/)
-
+      
       if enabled
-        room_formats.push(format) unless room_formats.include?(format)
+        room_formats.push(format) unless room_formats.include?(format.to_s)
       else
         room_formats.delete(format)     
       end
